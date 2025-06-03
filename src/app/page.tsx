@@ -1,5 +1,9 @@
+import { CaptureForm } from "@/components/capturePage/form";
+
 export default function Home() {
   return (
-    <h1 className="bg-red-500">Hello world</h1>
+    <main className={`w-screen min-h-screen flex justify-center items-center`}>
+      <CaptureForm />
+    </main>
   )
 }

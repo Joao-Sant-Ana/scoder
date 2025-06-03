@@ -13,22 +13,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Users {
   id String @id @default(uuid())
   name String
   email String @unique
   cel String @unique
   cpf String @unique
-  is_admin Boolean @default(false)
-  leads Lead[]
+  leads Leads[]
 }
 
-model Lead {
+model Leads {
   id String @id @default(uuid())
-  user User @relation(fields: [user_id], references: [id]) 
+  user Users @relation(fields: [user_id], references: [id]) 
   user_id String
   value Decimal @db.Decimal(10, 2)
   city String
   state String @db.Char(2)
   supply_type Int @default(1)
+}
+
+model Admins {
+  id String @id @default(uuid())
+  email String
+  password String
 }
