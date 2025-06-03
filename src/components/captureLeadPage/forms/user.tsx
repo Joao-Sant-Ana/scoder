@@ -1,4 +1,4 @@
-import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { type FormProps } from "../Form";
 import { maskCPF, maskPhone } from "@/lib/utils";
@@ -17,6 +17,9 @@ export function UserForm({form}: FormProps) {
                             <FormControl>
                                 <Input placeholder="Digite seu nome" {...field} />
                             </FormControl>
+                            {form.formState.errors.city && (
+                                <FormMessage>{form.formState.errors.city.message}</FormMessage>
+                            )}
                         </FormItem>
                     )}                
                 />
@@ -29,6 +32,9 @@ export function UserForm({form}: FormProps) {
                             <FormControl>
                                 <Input placeholder="Digite seu email" {...field} />
                             </FormControl>
+                            {form.formState.errors.city && (
+                                <FormMessage>{form.formState.errors.city.message}</FormMessage>
+                            )}
                         </FormItem>
                     )}
                 />
@@ -43,6 +49,9 @@ export function UserForm({form}: FormProps) {
                             <FormControl>
                                 <Input placeholder="Digite seu telefone" {...field} value={maskPhone(field.value)} />
                             </FormControl>
+                            {form.formState.errors.city && (
+                                <FormMessage>{form.formState.errors.city.message}</FormMessage>
+                            )}
                         </FormItem>
                     )}                
                 />
@@ -55,6 +64,9 @@ export function UserForm({form}: FormProps) {
                             <FormControl>
                                 <Input placeholder="Digite seu cpf" {...field} value={maskCPF(field.value)} />
                             </FormControl>
+                            {form.formState.errors.city && (
+                                <FormMessage>{form.formState.errors.city.message}</FormMessage>
+                            )}
                         </FormItem>
                     )}
                 />

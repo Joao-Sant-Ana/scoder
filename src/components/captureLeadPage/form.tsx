@@ -8,10 +8,11 @@ import { Button } from "@/components/ui/button"
 import type { LeadFormProps, FormData } from "@/types"
 import { CreateLeadWithUser } from "@/actions"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { redirect } from "next/navigation"
 
 const formSchema = z.object({
   // Lead fields
-  value: z.number(),
+  value: z.string(),
   city: z.string(),
   state: z.string(),
   supply_type: z.string(),
@@ -31,7 +32,13 @@ export function CaptureForm() {
 
     const onSubmit = async (data: FormData) => {
         const response = await CreateLeadWithUser(data);
-        console.log(response);
+        if (!response.success) {
+            // Handle error here
+
+            return;
+        }
+
+        redirect(`/${response.data?.id}`);
     }
 
     return (

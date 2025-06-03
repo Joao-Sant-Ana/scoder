@@ -1,4 +1,4 @@
-import { Leads } from "@prisma/client";
+import { type Leads, type Admins } from "@prisma/client";
 import { type UseFormReturn } from "react-hook-form"
 
 export type LeadFormProps<T> = {
@@ -21,7 +21,7 @@ export type LeadData = {
 }
 
 export type FormData = {
-    value: number;
+    value: string;
     city: string;
     state: string;
     supply_type: string;
@@ -34,7 +34,14 @@ export type FormData = {
 export type CreateLeadResponse<T> = {
     success: boolean;
     message: string;
-    data?: T
+    data?: T;
 }
 
 export type Lead = Leads;
+
+export type Admin = Admins;
+
+type AdminData = {
+    email: string;
+    password: string;
+}

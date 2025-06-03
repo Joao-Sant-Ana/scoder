@@ -1,4 +1,4 @@
-import { FormControl, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { type FormProps } from "../Form";
@@ -20,6 +20,9 @@ export function LeadForm({form}: FormProps) {
                             <FormControl>
                                 <Input placeholder="Santa Rita" {...field} />
                             </FormControl>
+                            {form.formState.errors.city && (
+                                <FormMessage>{form.formState.errors.city.message}</FormMessage>
+                            )}
                         </FormItem>
                     )}                
                 />
@@ -41,6 +44,9 @@ export function LeadForm({form}: FormProps) {
                                     </SelectContent>
                                 </Select>
                             </FormControl>
+                            {form.formState.errors.state && (
+                                <FormMessage>{form.formState.errors.state.message}</FormMessage>
+                            )}
                         </FormItem>
                     )}
                 />
@@ -53,8 +59,11 @@ export function LeadForm({form}: FormProps) {
                         <FormItem className={`w-3/4`}>
                             <FormLabel>Valor</FormLabel>
                             <FormControl>
-                                <Input placeholder="Custo mensal da sua conta" {...field} />
+                                <Input placeholder="Custo mensal da sua conta" type="number" {...field} />
                             </FormControl>
+                            {form.formState.errors.value && (
+                                <FormMessage>{form.formState.errors.value.message}</FormMessage>
+                            )}
                         </FormItem>
                     )}                
                 />
@@ -76,6 +85,9 @@ export function LeadForm({form}: FormProps) {
                                     </SelectContent>
                                 </Select>
                             </FormControl>
+                            {form.formState.errors.supply_type && (
+                                <FormMessage>{form.formState.errors.supply_type.message}</FormMessage>
+                            )}
                         </FormItem>
                     )}
                 />

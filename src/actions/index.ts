@@ -1,7 +1,9 @@
 "use server"
-import { CreateLead, CreateUser, GetLead } from "@/lib/queries";
+import { CreateLead, CreateUser, GetAdmin, GetLead, GetUser } from "@/lib/queries";
 import { isValidCPF, isValidPhone, unmask } from "@/lib/utils";
-import type { CreateLeadResponse, FormData, Lead } from "@/types";
+import { compare } from "bcrypt";
+import type { AdminData, CreateLeadResponse, FormData, Lead, Admin } from "@/types";
+import { SignJWT, jwtVerify} from "jose";
 
 export async function CreateLeadWithUser(data: FormData): Promise<CreateLeadResponse<Lead>> {
     const supplyNumber = Number(data.supply_type);
@@ -39,11 +41,16 @@ export async function CreateLeadWithUser(data: FormData): Promise<CreateLeadResp
             cel: cel,
         };
 
-        const user = await CreateUser(userData);
+
+        let user = await GetUser({email: data.email, cpf, cel});
+        console.log(user)
+        if (!user) {
+            user = await CreateUser(userData);
+        }
 
         const leadData = {
             user_id: user.id,
-            value: data.value,
+            value: Number(data.value),
             supply_type: supplyNumber,
             city: data.city,
             state: data.state
@@ -82,6 +89,61 @@ export async function GetLeadByID(id: string): Promise<CreateLeadResponse<Lead>>
             message: "Lead found",
             data: lead,
         };
+    } catch (err) {
+        console.log(err);
+        return {
+            success: false,
+            message: "Internal server error"
+        };
+    }
+}
+
+export async function LoginAdmin(data: AdminData): Promise<CreateLeadResponse<{token: string}>> {
+    try {
+        const admin = await GetAdmin(data.email);
+        if (!admin) {
+            return {
+                success: false,
+                message: "User not found"
+            };
+        }
+
+        const isEqual = await compare(data.password, admin.password);
+        if (!isEqual) {
+            return {
+                success: false,
+                message: "Invalid data"
+            }
+        }
+
+        const secretString = process.env.JWT_SECRET;
+        if (!secretString) {
+            return {
+                success: false,
+                message: "Internal server error"
+            }
+        }
+
+        const payload = {
+            sub: admin.id,
+            email: admin.email
+        }
+
+        const secret = new TextEncoder().encode(secretString);
+        const token = await new SignJWT(payload)
+            .setProtectedHeader({alg: "HS256"})
+            .setIssuedAt()
+            .setExpirationTime("24h")
+            .sign(secret)
+
+        return {
+            success: true,
+            message: "Logged succefuly",
+            data: {
+                token
+            }
+        }
+
     } catch (err) {
         console.log(err);
         return {
