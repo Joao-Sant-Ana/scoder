@@ -20,3 +20,12 @@ export async function CreateLead(lead: LeadData) {
 
     return data;
 }
+
+export async function GetLead(id: string) {
+    const data = await prisma.leads.findFirst({
+        select: {city: true, id: true, user_id: true, state: true, supply_type: true, value: true},
+        where: {id}
+    })
+
+    return data;
+}

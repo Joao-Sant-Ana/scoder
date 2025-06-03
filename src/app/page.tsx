@@ -1,4 +1,4 @@
-import { CaptureForm } from "@/components/capturePage/form";
+import { CaptureForm } from "@/components/captureLeadPage/form";
 
 export default function Home() {
   return (

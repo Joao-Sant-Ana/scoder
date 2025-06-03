@@ -33,12 +33,12 @@ export function UserForm({form}: FormProps) {
                     )}
                 />
             </div>
-            <div className={`flex flex-col gap-4 w-full`}>
+            <div className={`flex gap-4 w-full`}>
                 <FormField
                     control={form.control}
                     name="cel"
                     render={({field}) => (
-                        <FormItem>
+                        <FormItem className={`w-1/2`}>
                             <FormLabel>Telefone</FormLabel>
                             <FormControl>
                                 <Input placeholder="Digite seu telefone" {...field} value={maskPhone(field.value)} />
@@ -50,7 +50,7 @@ export function UserForm({form}: FormProps) {
                     control={form.control}
                     name="cpf"
                     render={({field}) => (
-                        <FormItem>
+                        <FormItem className={`w-1/2`}>
                             <FormLabel>CPF</FormLabel>
                             <FormControl>
                                 <Input placeholder="Digite seu cpf" {...field} value={maskCPF(field.value)} />

@@ -30,7 +30,8 @@ export type FormData = {
     cpf: string;
 }
 
-export type CreateLeadResponse = {
+export type CreateLeadResponse<T = any> = {
     success: boolean;
     message: string;
+    [key: string]: T
 }

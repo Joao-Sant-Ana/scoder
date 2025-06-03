@@ -7,6 +7,7 @@ import { UserForm } from "./forms/user"
 import { Button } from "@/components/ui/button"
 import type { LeadFormProps, FormData } from "@/types"
 import { CreateLeadWithUser } from "@/actions"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 const formSchema = z.object({
   // Lead fields
@@ -21,10 +22,12 @@ const formSchema = z.object({
   cpf: z.string()
 })
 
-export type FormProps = LeadFormProps<FormData>;
+export type FormProps = LeadFormProps<z.infer<typeof formSchema>>;
 
 export function CaptureForm() {
-    const form = useForm<FormData>()
+    const form = useForm<FormData>({
+        resolver: zodResolver(formSchema)
+    })
 
     const onSubmit = async (data: FormData) => {
         const response = await CreateLeadWithUser(data);
