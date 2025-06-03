@@ -1,9 +1,9 @@
 "use server"
 import { CreateLead, CreateUser, GetLead } from "@/lib/queries";
 import { isValidCPF, isValidPhone, unmask } from "@/lib/utils";
-import type { CreateLeadResponse, FormData } from "@/types";
+import type { CreateLeadResponse, FormData, Lead } from "@/types";
 
-export async function CreateLeadWithUser(data: FormData): Promise<CreateLeadResponse> {
+export async function CreateLeadWithUser(data: FormData): Promise<CreateLeadResponse<Lead>> {
     const supplyNumber = Number(data.supply_type);
     if(isNaN(supplyNumber)) {
         return {
@@ -54,7 +54,7 @@ export async function CreateLeadWithUser(data: FormData): Promise<CreateLeadResp
         return {
             success: true,
             message: "Lead created",
-            lead
+            data: lead,
         };
     } catch (err) {
         // Log error for debug
@@ -66,7 +66,7 @@ export async function CreateLeadWithUser(data: FormData): Promise<CreateLeadResp
     }
 }
 
-export async function GetLeadByID(id: string): Promise<CreateLeadResponse> {
+export async function GetLeadByID(id: string): Promise<CreateLeadResponse<Lead>> {
     try {
         const lead = await GetLead(id);
 
@@ -80,7 +80,7 @@ export async function GetLeadByID(id: string): Promise<CreateLeadResponse> {
         return {
             success: true,
             message: "Lead found",
-            lead
+            data: lead,
         };
     } catch (err) {
         console.log(err);
