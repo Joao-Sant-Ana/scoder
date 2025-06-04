@@ -1,0 +1,63 @@
+import { NextResponse } from 'next/server';
+import { GetAdmin } from '@/lib/queries';
+import { compare } from 'bcrypt';
+import { SignJWT } from 'jose';
+
+export async function POST(req: Request) {
+    const { email, password } = await req.json();
+
+    if (!email || !password) {
+        return NextResponse.json(
+            { success: false, message: 'Email and password required' },
+            { status: 400 },
+        );
+    }
+
+    try {
+        const admin = await GetAdmin({ email });
+
+        if (!admin) {
+            return NextResponse.json(
+                { success: false, message: 'User not found' },
+                { status: 404 },
+            );
+        }
+
+        const isEqual = await compare(password, admin.password);
+        if (!isEqual) {
+            return NextResponse.json(
+                { success: false, message: 'Invalid credentials' },
+                { status: 401 },
+            );
+        }
+
+        const secret = process.env.JWT_SECRET;
+        if (!secret) {
+            return NextResponse.json(
+                { success: false, message: 'Internal server error' },
+                { status: 500 },
+            );
+        }
+
+        const token = await new SignJWT({
+            sub: admin.id,
+            email: admin.email,
+        })
+            .setProtectedHeader({ alg: 'HS256' })
+            .setIssuedAt()
+            .setExpirationTime('24h')
+            .sign(new TextEncoder().encode(secret));
+
+        return NextResponse.json({
+            success: true,
+            message: 'Logged in successfully',
+            data: { token },
+        });
+    } catch (err) {
+        console.error(err);
+        return NextResponse.json(
+            { success: false, message: 'Internal server error' },
+            { status: 500 },
+        );
+    }
+}

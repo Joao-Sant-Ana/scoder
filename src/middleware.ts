@@ -8,11 +8,14 @@ export function middleware(request: NextRequest) {
     const isOnLoginPage = request.nextUrl.pathname === '/admin';
 
     if (isOnLoginPage && isAuth) {
-        console.log("aq")
         return NextResponse.redirect(new URL('/admin/dashboard', request.url));
     }
 
-    if (!isAuth && request.nextUrl.pathname.startsWith('/admin') &&   request.nextUrl.pathname !== '/admin') {
+    if (
+        !isAuth &&
+        request.nextUrl.pathname.startsWith('/admin') &&
+        request.nextUrl.pathname !== '/admin'
+    ) {
         return NextResponse.redirect(new URL('/admin', request.url));
     }
 
