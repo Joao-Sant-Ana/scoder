@@ -7,7 +7,9 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "format": "prettier --write ."
+        "format": "prettier --write .",
+        "postinstall": "npx prisma generate",
+        "migrate": "npx prisma migrate deploy"
     },
     "dependencies": {
         "@hookform/resolvers": "^5.0.1",
