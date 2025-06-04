@@ -1,6 +1,6 @@
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { type FormProps } from '../Form';
+import { type FormProps } from '..';
 import { maskCPF, maskPhone } from '@/lib/utils';
 
 export function UserForm({ form }: FormProps) {

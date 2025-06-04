@@ -1,4 +1,4 @@
-import { CaptureForm } from '@/components/captureLeadPage/Form';
+import { CaptureForm } from '@/components/captureLeadPage';
 import { PublicHeader } from '@/components/shared/PublicHeader';
 
 export default function Home() {

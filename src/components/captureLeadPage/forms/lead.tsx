@@ -7,7 +7,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
-import { type FormProps } from '../Form';
+import { type FormProps } from '..';
 
 const states = [
     'AC',
