@@ -1,6 +1,6 @@
 # Scoder Challenge
 
-🔗 [Access the live project](placeholder)
+🔗 [Access the live project](https://scoder-silk.vercel.app/)
 
 Please read the entire README file to understand the decisions made and the step-by-step instructions on how to run the project.
 
