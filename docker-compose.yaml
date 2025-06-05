@@ -10,7 +10,7 @@ services:
       NEXT_PUBLIC_APP_URL: ${NEXT_PUBLIC_APP_URL}
     depends_on:
       db:
-        condition: service_healthy   # <-- wait for db health before starting app
+        condition: service_healthy
 
   db:
     image: postgres:15

@@ -9,7 +9,10 @@ RUN apk add --no-cache libc6-compat
 # Install dependencies
 FROM base AS deps
 
-COPY package.json package-lock.json* ./
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+COPY prisma ./prisma
 
 RUN npm install --frozen-lockfile
 
@@ -24,6 +27,7 @@ COPY . .
 
 RUN npx prisma generate
 RUN npm run build
+
 
 # Production image
 FROM base AS runner
@@ -40,4 +44,4 @@ COPY --from=builder /app/prisma ./prisma
 
 EXPOSE 3000
 
-CMD sh -c "npx prisma migrate deploy && npm run start"
+CMD ["sh", "-c", "npx prisma migrate deploy && npm run start"]
