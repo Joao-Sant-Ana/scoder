@@ -8,18 +8,19 @@ import { Button } from '@/components/ui/button';
 import type { LeadFormProps, FormData } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 const formSchema = z.object({
     // Lead fields
-    value: z.string(),
-    city: z.string(),
+    value: z.string().min(1, "Campo não pode estar vazio"),
+    city: z.string().min(1, "Campo não pode estar vazio"),
     state: z.string(),
-    supply_type: z.string(),
+    supply_type: z.string().min(1, "Campo não pode estar vazio"),
     // User fields
-    name: z.string(),
-    email: z.string(),
-    cel: z.string(),
-    cpf: z.string(),
+    name: z.string().min(1, "Campo não pode estar vazio"),
+    email: z.string().min(1, "Campo não pode estar vazio").email("Formato de email invalido"),
+    cel: z.string().min(1, "Campo não pode estar vazio"),
+    cpf: z.string().min(1, "Campo não pode estar vazio"),
 });
 
 export type FormProps = LeadFormProps<z.infer<typeof formSchema>>;
@@ -43,14 +44,14 @@ export function CaptureForm() {
             const result = await res.json();
 
             if (!result.success) {
-                alert('Erro ao criar lead');
+                toast('Erro ao criar lead');
                 return;
             }
 
             router.push(`/lead/${result.data.id}`);
         } catch (err) {
             console.error(err);
-            alert('Erro inesperado. Tente novamente.');
+            toast('Erro inesperado. Tente novamente.');
         } finally {
         }
     };

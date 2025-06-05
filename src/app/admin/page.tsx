@@ -7,9 +7,10 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { useSetCookie } from 'cookies-next';
+import { toast } from 'sonner';
 
 const formSchema = z.object({
-    email: z.string().email({ message: 'Email inválido' }),
+    email: z.string().email('Email inválido'),
     password: z.string().min(1, { message: 'Senha obrigatória' }),
 });
 
@@ -39,7 +40,7 @@ export default function AdminLogin() {
             const result = await res.json();
 
             if (!res.ok) {
-                alert(result.message);
+                toast(result.message);
                 return;
             }
 
@@ -48,7 +49,7 @@ export default function AdminLogin() {
             router.push('/admin/dashboard');
         } catch (error) {
             console.error('Login error:', error);
-            alert('Erro ao tentar fazer login. Tente novamente.');
+            toast('Erro ao tentar fazer login. Tente novamente.');
         }
     };
 
