@@ -45,7 +45,7 @@ export function DashboardTable({ columns, data }: TableProps) {
             <TableBody>
                 {table.getRowModel().rows?.length ? (
                     table.getRowModel().rows.map((row) => (
-                        <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'} className={`relative`} onClick={() => router.push(`/admin/dashboard/leads/${row.original.id}`)}>
+                        <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'} className={`relative`} onClick={() => router.push(`/lead/${row.original.id}`)}>
                             {row.getVisibleCells().map((cell) => (
                                 <TableCell key={cell.id} className={`cursor-pointer`}>
                                         {flexRender(cell.column.columnDef.cell, cell.getContext())}

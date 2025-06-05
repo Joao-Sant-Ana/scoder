@@ -56,3 +56,9 @@ export type ColumnsDefinition = {
     email: string;
     cel: string;
 };
+
+type LeadChartProps = {
+    year: string;
+    value: number;
+    discountValue: number;
+}
