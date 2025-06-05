@@ -6,15 +6,17 @@ export function middleware(request: NextRequest) {
 
     const isAuth = !!token;
     const isOnLoginPage = request.nextUrl.pathname === '/admin';
+    const isOnRegisterPage = request.nextUrl.pathname === '/admin/register';
 
-    if (isOnLoginPage && isAuth) {
+    if ((isOnLoginPage || isOnRegisterPage) && isAuth) {
         return NextResponse.redirect(new URL('/admin/dashboard', request.url));
     }
 
     if (
         !isAuth &&
         request.nextUrl.pathname.startsWith('/admin') &&
-        request.nextUrl.pathname !== '/admin'
+        !isOnLoginPage &&
+        !isOnRegisterPage
     ) {
         return NextResponse.redirect(new URL('/admin', request.url));
     }

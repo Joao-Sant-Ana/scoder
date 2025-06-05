@@ -1,9 +1,9 @@
 import { cookies } from 'next/headers';
 import { DashboardTable } from '@/components/dashboard/table';
 import { columns } from '@/components/dashboard/table/columns';
-import { LeadsWithUsers, type ColumnsDefinition } from '@/types';
+import type { LeadsWithUsers } from '@/types';
 import { maskPhone } from '@/lib/utils';
-import { DashboardHeader } from '@/components/dashboard/header';
+import { DashboardHeader } from '@/components/shared/DashboardHeader';
 
 export default async function Dashboard() {
     const token = (await cookies()).get('token')?.value;
@@ -38,9 +38,11 @@ export default async function Dashboard() {
     return (
         <>
             <DashboardHeader />
-            <main className="min-h-[calc(100vh-6rem)] flex items-center justify-center">
-                <div className="w-3/5 border-1 border-black rounded-md shadow-sm shadow-black/50 p-6">
-                    <DashboardTable<ColumnsDefinition> columns={columns} data={data} />
+            <main className={`min-h-[calc(100vh-6rem)] flex items-center justify-center`}>
+                <div className={`w-full flex items-center justify-center`}>
+                    <div className={`w-3/5 max-h-[60vh] border-1 overflow-auto border-black rounded-md shadow-sm shadow-black/50 p-6`}>
+                        <DashboardTable columns={columns} data={data} />
+                    </div>
                 </div>
             </main>
         </>

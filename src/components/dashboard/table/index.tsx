@@ -8,18 +8,21 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
+import type { ColumnsDefinition } from '@/types';
+import { useRouter } from 'next/navigation';
 
-type TableProps<T> = {
-    columns: ColumnDef<T>[];
-    data: T[];
+type TableProps = {
+    columns: ColumnDef<ColumnsDefinition>[];
+    data: ColumnsDefinition[];
 };
 
-export function DashboardTable<T>({ columns, data }: TableProps<T>) {
+export function DashboardTable({ columns, data }: TableProps) {
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
     });
+    const router = useRouter();
 
     return (
         <Table>
@@ -42,10 +45,10 @@ export function DashboardTable<T>({ columns, data }: TableProps<T>) {
             <TableBody>
                 {table.getRowModel().rows?.length ? (
                     table.getRowModel().rows.map((row) => (
-                        <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
+                        <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'} className={`relative`} onClick={() => router.push(`/admin/dashboard/leads/${row.original.id}`)}>
                             {row.getVisibleCells().map((cell) => (
-                                <TableCell key={cell.id}>
-                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                <TableCell key={cell.id} className={`cursor-pointer`}>
+                                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                 </TableCell>
                             ))}
                         </TableRow>

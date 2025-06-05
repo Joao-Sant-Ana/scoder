@@ -47,11 +47,6 @@ export type LeadsWithUsers = Lead & {
     user: Omit<User, 'id'>;
 };
 
-type AdminData = {
-    email: string;
-    password: string;
-};
-
 export type ColumnsDefinition = {
     id: string;
     cityAndState: string;

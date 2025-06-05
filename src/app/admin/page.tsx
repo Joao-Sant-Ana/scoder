@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import { useSetCookie } from 'cookies-next';
 import { toast } from 'sonner';
+import Link from 'next/link';
 
 const formSchema = z.object({
     email: z.string().email('Email inválido'),
@@ -29,7 +30,7 @@ export default function AdminLogin() {
 
     const onSubmit = async (data: FormData) => {
         try {
-            const res = await fetch('/api/auth/login', {
+            const res = await fetch('/api/admin/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -90,7 +91,8 @@ export default function AdminLogin() {
                                 </FormItem>
                             )}
                         />
-                        <div className="flex justify-end items-center">
+                        <div className="flex justify-beetwen items-center">
+                            <Link href={"/admin/register"}>Crie sua conta aqui</Link>
                             <Button className="cursor-pointer" type="submit">
                                 Entrar
                             </Button>

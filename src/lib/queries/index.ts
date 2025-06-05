@@ -1,4 +1,4 @@
-import type { AdminData, LeadData, UserData } from '@/types';
+import type { LeadData, UserData } from '@/types';
 import { prisma } from '../prisma';
 
 export async function GetUser({ email, cpf, cel }: { email: string; cpf: string; cel: string }) {
@@ -68,15 +68,6 @@ export async function DeleteLeadByID(id: string) {
     });
 }
 
-export async function CreateAdmin(admin: AdminData) {
-    const data = await prisma.admins.create({
-        data: { ...admin },
-        select: { email: true, id: true },
-    });
-
-    return data;
-}
-
 export async function GetAdmin({ email, id }: { email?: string; id?: string }) {
     const data = await prisma.admins.findFirst({
         where: {
@@ -90,6 +81,15 @@ export async function GetAdmin({ email, id }: { email?: string; id?: string }) {
             ],
         },
     });
+
+    return data;
+}
+
+export async function CreateAdmin(email: string, password: string) {
+    const data = await prisma.admins.create({
+        data: { email, password},
+        select: { email: true, id: true }
+    })
 
     return data;
 }
