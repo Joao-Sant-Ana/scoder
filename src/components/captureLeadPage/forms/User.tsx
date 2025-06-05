@@ -17,8 +17,8 @@ export function UserForm({ form }: FormProps) {
                             <FormControl>
                                 <Input placeholder="Digite seu nome" {...field} />
                             </FormControl>
-                            {form.formState.errors.city && (
-                                <FormMessage>{form.formState.errors.city.message}</FormMessage>
+                            {form.formState.errors.name && (
+                                <FormMessage>{form.formState.errors.name.message}</FormMessage>
                             )}
                         </FormItem>
                     )}
@@ -32,8 +32,8 @@ export function UserForm({ form }: FormProps) {
                             <FormControl>
                                 <Input placeholder="Digite seu email" {...field} />
                             </FormControl>
-                            {form.formState.errors.city && (
-                                <FormMessage>{form.formState.errors.city.message}</FormMessage>
+                            {form.formState.errors.email && (
+                                <FormMessage>{form.formState.errors.email.message}</FormMessage>
                             )}
                         </FormItem>
                     )}
@@ -53,8 +53,8 @@ export function UserForm({ form }: FormProps) {
                                     value={maskPhone(field.value)}
                                 />
                             </FormControl>
-                            {form.formState.errors.city && (
-                                <FormMessage>{form.formState.errors.city.message}</FormMessage>
+                            {form.formState.errors.cel && (
+                                <FormMessage>{form.formState.errors.cel.message}</FormMessage>
                             )}
                         </FormItem>
                     )}
@@ -72,8 +72,8 @@ export function UserForm({ form }: FormProps) {
                                     value={maskCPF(field.value)}
                                 />
                             </FormControl>
-                            {form.formState.errors.city && (
-                                <FormMessage>{form.formState.errors.city.message}</FormMessage>
+                            {form.formState.errors.cpf && (
+                                <FormMessage>{form.formState.errors.cpf.message}</FormMessage>
                             )}
                         </FormItem>
                     )}
